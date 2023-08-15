@@ -40,7 +40,3 @@ func Test_LoadDistribution(t *testing.T) {
 	m := c.LocateKey([]byte("node1234567oaishfosdbfksaufhakfjbasjkldfiuafkjabsdfhasufbaskjdfbasdlfasdlfhasfsajkdf"))
 	log.Printf("locate node to %s", m)
 }
-
-//todo test following
-// 1. new with []100 and remove 1, if this is the same as new with []99, pick a middle one to remove
-// 2. check across multiple runs, the owner and parition are stable exactly the same
