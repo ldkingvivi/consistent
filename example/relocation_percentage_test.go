@@ -1,31 +1,12 @@
-package main
+package example
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
-
 	"github.com/buraksezer/consistent"
-	"github.com/cespare/xxhash"
+	"testing"
 )
 
-type Member string
-
-func (m Member) String() string {
-	return string(m)
-}
-
-type hasher struct{}
-
-func (h hasher) Sum64(data []byte) uint64 {
-	return xxhash.Sum64(data)
-}
-
-func init() {
-	rand.Seed(time.Now().UTC().UnixNano())
-}
-
-func main() {
+func Test_Relocation(t *testing.T) {
 	// Create a new consistent instance.
 	members := []consistent.Member{}
 	for i := 0; i < 8; i++ {

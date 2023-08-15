@@ -1,25 +1,13 @@
-package main
+package example
 
 import (
 	"fmt"
+	"testing"
 
 	"github.com/buraksezer/consistent"
-	"github.com/cespare/xxhash"
 )
 
-type Member string
-
-func (m Member) String() string {
-	return string(m)
-}
-
-type hasher struct{}
-
-func (h hasher) Sum64(data []byte) uint64 {
-	return xxhash.Sum64(data)
-}
-
-func main() {
+func Test_AddAndList(t *testing.T) {
 	members := []consistent.Member{}
 	for i := 0; i < 8; i++ {
 		member := Member(fmt.Sprintf("node%d.olricmq", i))
@@ -39,5 +27,8 @@ func main() {
 		owners[owner.String()]++
 	}
 	fmt.Println("average load:", c.AverageLoad())
-	fmt.Println("owners:", owners)
+
+	for o, n := range owners {
+		fmt.Printf("%+v:%d\n", o, n)
+	}
 }

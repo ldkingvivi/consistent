@@ -32,9 +32,9 @@ import (
 
 func newConfig() Config {
 	return Config{
-		PartitionCount:    23,
+		PartitionCount:    6113,
 		ReplicationFactor: 20,
-		Load:              1.25,
+		Load:              1.00001,
 		Hasher:            hasher{},
 	}
 }
@@ -197,8 +197,10 @@ func BenchmarkAddRemove(b *testing.B) {
 func BenchmarkLocateKey(b *testing.B) {
 	cfg := newConfig()
 	c := New(nil, cfg)
-	c.Add(testMember("node1"))
-	c.Add(testMember("node2"))
+	nodeCount := 128
+	for i := 0; i < nodeCount; i++ {
+		c.Add(testMember("node" + strconv.Itoa(i)))
+	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		key := []byte("key" + strconv.Itoa(i))
