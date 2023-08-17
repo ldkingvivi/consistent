@@ -32,9 +32,9 @@ import (
 
 func newConfig() Config {
 	return Config{
-		PartitionCount:    6113,
+		PartitionCount:    97,
 		ReplicationFactor: 20,
-		Load:              1.00001,
+		Load:              1.01,
 		Hasher:            hasher{},
 	}
 }
@@ -185,7 +185,13 @@ func TestConsistentClosestMembers(t *testing.T) {
 
 func BenchmarkAddRemove(b *testing.B) {
 	cfg := newConfig()
-	c := New(nil, cfg)
+
+	conns := make([]Member, 0, 64)
+	for i := 0; i < 64; i++ {
+		conns = append(conns, testMember(strconv.Itoa(i)))
+	}
+
+	c := New(conns, cfg)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		member := testMember("node" + strconv.Itoa(i))
